@@ -14,7 +14,7 @@
 
 ## updateById
 
-# ![alt text](images/updateByid.png)
+# ![alt text](images/updateById.png)
 
 ## removeById
 
