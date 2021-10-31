@@ -1,9 +1,10 @@
-const chalk = require("chalk");
+const chalk = require('chalk')
 
 const onCorrectId = () => {
   console.log(
-    chalk.red("Incorrected Id! Please check your id and repeat the request")
-  );
-};
+    chalk.red('Incorrected Id! Please check your ID and repeat the request')
+  )
+  return null
+}
 
-module.exports = onCorrectId;
+module.exports = onCorrectId
