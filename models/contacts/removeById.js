@@ -1,6 +1,5 @@
 const getAll = require('./getAll')
 const updateContacts = require('./updateContacts')
-const onCorrectId = require('./onCorrectId')
 
 const removeById = async (id) => {
   const contacts = await getAll()
@@ -8,7 +7,7 @@ const removeById = async (id) => {
     (contact) => contact.id === id
   )
   if (index === -1) {
-    return onCorrectId()
+    return null
   }
   const removeContact = contacts.splice(index, 1)
   await updateContacts(contacts)
