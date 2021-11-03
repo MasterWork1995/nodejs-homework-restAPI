@@ -4,7 +4,7 @@ const onCorrectId = require('./onCorrectId')
 
 const updateById = async (id, { name, email, phone }) => {
   const contacts = await getAll()
-  const index = contacts.findIndex((item) => item.id.toString() === id)
+  const index = contacts.findIndex((item) => item.id === id)
   if (index === -1) {
     return onCorrectId()
   }
