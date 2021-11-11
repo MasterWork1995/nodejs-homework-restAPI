@@ -1,10 +1,11 @@
-const { sendNotFound } = require('../../helpers')
-const contactsOperations = require('../../models/contacts')
-const { sendSuccessToRes } = require('../../helpers')
+const { Contact } = require('../../models')
+const { sendSuccessToRes, sendNotFound } = require('../../helpers')
 
 const updateById = async (req, res, next) => {
   const { contactId } = req.params
-  const result = await contactsOperations.updateById(contactId, req.body)
+  const result = await Contact.findByIdAndUpdate(contactId, req.body, {
+    new: true,
+  })
   if (!result) {
     next(sendNotFound(contactId))
   }
