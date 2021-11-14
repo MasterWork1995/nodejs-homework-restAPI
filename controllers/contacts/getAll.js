@@ -2,7 +2,7 @@ const { Contact } = require('../../models')
 const { sendSuccessToRes } = require('../../helpers')
 
 const getAll = async (req, res) => {
-  const { page, limit } = req.query
+  const { page = 0, limit = 0 } = req.query
   const skip = (page - 1) * limit
   const { _id } = req.user
   const result = await Contact.find(
