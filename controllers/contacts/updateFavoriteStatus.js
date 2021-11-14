@@ -1,5 +1,9 @@
 const { Contact } = require('../../models')
-const { sendSuccessToRes, sendNotFound, sendBadRequest } = require('../../helpers')
+const {
+  sendSuccessToRes,
+  sendNotFound,
+  sendBadRequest,
+} = require('../../helpers')
 
 const updateFavoriteStatus = async (req, res, next) => {
   const { contactId } = req.params

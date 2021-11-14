@@ -1,15 +1,20 @@
 const express = require('express')
 
 const {
-  addContact,
-  getAll,
-  getById,
-  updateById,
-  removeById,
-  updateFavoriteStatus,
-} = require('../../controllers/contacts')
+  contactsControllers: {
+    getAll,
+    getById,
+    addContact,
+    updateById,
+    updateFavoriteStatus,
+    removeById,
+  },
+} = require('../../controllers')
 const { validation, controllerWrapper } = require('../../middlewares')
-const { contactJoiSchema, updateStatusSchema } = require('../../models/contact')
+const {
+  contactJoiSchema,
+  updateStatusSchema,
+} = require('../../models/contact')
 
 const router = express.Router()
 
