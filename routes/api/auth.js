@@ -14,7 +14,7 @@ router.post(
   controllerWrapper(register)
 )
 
-router.post('./login',
+router.post('/login',
   validation(joiUserSchema),
   controllerWrapper(login)
 )

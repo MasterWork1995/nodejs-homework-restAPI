@@ -36,6 +36,10 @@ userSchema.methods.setPassword = function (password) {
   this.password = bcrypt.hashSync(password, bcrypt.genSaltSync(10))
 }
 
+userSchema.methods.comparePassword = function (password) {
+  return bcrypt.compareSync(password, this.password)
+}
+
 const joiUserSchema = Joi.object({
   email: Joi.string().pattern(PATTERNS.email).required(),
   password: Joi.string().pattern(PATTERNS.password).required(),

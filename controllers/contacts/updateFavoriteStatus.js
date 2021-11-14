@@ -9,7 +9,7 @@ const updateFavoriteStatus = async (req, res, next) => {
   const { contactId } = req.params
   const { favorite } = req.body
   if (favorite === undefined) {
-    next(sendBadRequest({ message: 'missing field favorite' }))
+    return next(sendBadRequest({ message: 'missing field favorite' }))
   }
   const result = await Contact.findByIdAndUpdate(
     contactId,
@@ -17,7 +17,7 @@ const updateFavoriteStatus = async (req, res, next) => {
     { new: true }
   )
   if (!result) {
-    next(sendNotFound(contactId))
+    return next(sendNotFound(contactId))
   }
   sendSuccessToRes(res, { result })
 }

@@ -7,7 +7,7 @@ const updateById = async (req, res, next) => {
     new: true,
   })
   if (!result) {
-    next(sendNotFound(contactId))
+    return next(sendNotFound(contactId))
   }
   sendSuccessToRes(res, { result })
 }
