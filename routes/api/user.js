@@ -1,11 +1,17 @@
 const express = require('express')
 
 const {
-  authControllers: { register, login, logout, updateSubscription },
+  authControllers: {
+    register,
+    login,
+    logout,
+    getCurrentUser,
+    updateSubscription,
+  },
 } = require('../../controllers')
 const {
   validation,
-  autenticate,
+  authenticate,
   controllerWrapper,
 } = require('../../middlewares')
 const { joiUserSchema, joiSubscriptionSchema } = require('../../models/user')
@@ -18,14 +24,17 @@ router.post(
   controllerWrapper(register)
 )
 
-router.post('/login',
-  validation(joiUserSchema),
-  controllerWrapper(login))
+router.post('/login', validation(joiUserSchema), controllerWrapper(login))
 
-router.get('/logout',
-  autenticate,
-  controllerWrapper(logout))
+router.get('/logout', authenticate, controllerWrapper(logout))
 
-router.patch('/', autenticate, validation(joiSubscriptionSchema), controllerWrapper(updateSubscription))
+router.get('/current', authenticate, controllerWrapper(getCurrentUser))
+
+router.patch(
+  '/',
+  authenticate,
+  validation(joiSubscriptionSchema),
+  controllerWrapper(updateSubscription)
+)
 
 module.exports = router
