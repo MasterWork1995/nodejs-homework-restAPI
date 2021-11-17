@@ -1,14 +1,14 @@
 const express = require('express')
 
 const {
-  authControllers: { register, login, logout },
+  authControllers: { register, login, logout, updateSubscription },
 } = require('../../controllers')
 const {
   validation,
   autenticate,
   controllerWrapper,
 } = require('../../middlewares')
-const { joiUserSchema } = require('../../models/user')
+const { joiUserSchema, joiSubscriptionSchema } = require('../../models/user')
 
 const router = express.Router()
 
@@ -25,5 +25,7 @@ router.post('/login',
 router.get('/logout',
   autenticate,
   controllerWrapper(logout))
+
+router.patch('/', autenticate, validation(joiSubscriptionSchema), controllerWrapper(updateSubscription))
 
 module.exports = router
