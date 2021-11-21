@@ -20,7 +20,9 @@ const getAll = async (req, res) => {
 
     return sendSuccessToRes(res, { result })
   }
-
+  if (!Number(page) && !Number(limit)) {
+    throw new BadRequest('Page and limit must be a number!')
+  }
   const result = await Contact.find(
     { owner: _id },
     '_id name email phone favorite owner',
