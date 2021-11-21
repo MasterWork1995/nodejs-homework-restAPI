@@ -4,7 +4,6 @@ const bcrypt = require('bcryptjs')
 
 const PATTERNS = {
   email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-  hashPassword: /^\$2[ayb]\$.{56}$/,
   password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
 }
 
@@ -19,7 +18,6 @@ const userSchema = Schema(
     password: {
       type: String,
       required: [true, 'Password is required'],
-      match: PATTERNS.hashPassword,
     },
     subscription: {
       type: String,
