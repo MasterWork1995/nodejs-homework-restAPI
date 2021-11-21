@@ -5,7 +5,11 @@ const { sendSuccessToRes } = require('../../helpers')
 
 const getAll = async (req, res) => {
   const { page = 0, limit = 0, favorite } = req.query
-  const skip = (page - 1) * limit
+
+  if (Number.isNaN(page) || Number.isNaN(limit)) {
+    throw new BadRequest('Page and limit must be a number!')
+  }
+  const skip = (Number(page) - 1) * limit
   const { _id } = req.user
 
   if (favorite !== undefined) {
@@ -20,9 +24,7 @@ const getAll = async (req, res) => {
 
     return sendSuccessToRes(res, { result })
   }
-  if (!Number(page) && !Number(limit)) {
-    throw new BadRequest('Page and limit must be a number!')
-  }
+
   const result = await Contact.find(
     { owner: _id },
     '_id name email phone favorite owner',
