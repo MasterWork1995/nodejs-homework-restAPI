@@ -1,6 +1,12 @@
 const multer = require('multer')
 const path = require('path')
 
+const MIME_TYPE = {
+  'image/png': 'png',
+  'image/jpeg': 'jpg',
+  'image/jpg': 'jpg',
+}
+
 const tempDir = path.join(__dirname, '../tmp')
 const uploadConfig = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -14,8 +20,10 @@ const uploadConfig = multer.diskStorage({
   },
 })
 
-const upload = multer({
-  storage: uploadConfig,
-})
+const fileFilter = (req, file, cb) => {
+  MIME_TYPE[file.mimetype] ? cb(null, true) : cb(null, false)
+}
+
+const upload = multer({ storage: uploadConfig, fileFilter })
 
 module.exports = upload
