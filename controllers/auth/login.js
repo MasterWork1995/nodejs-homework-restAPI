@@ -1,6 +1,7 @@
 
 const { Unauthorized } = require('http-errors')
 const jwt = require('jsonwebtoken')
+const { Forbidden } = require('http-errors')
 
 const { User } = require('../../models')
 const { sendSuccessToRes } = require('../../helpers')
@@ -10,6 +11,9 @@ const { SECRET_KEY } = process.env
 const login = async (req, res) => {
   const { email, password } = req.body
   const user = await User.findOne({ email })
+  if (!user.verify) {
+    throw new Forbidden('Email needs to be confirmed')
+  }
   if (!user || !user.comparePassword(password)) {
     throw new Unauthorized('Email or password is wrong')
   }

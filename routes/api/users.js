@@ -8,6 +8,8 @@ const {
     getCurrentUser,
     updateSubscription,
     updateAvatar,
+    verify,
+    reVerify,
   },
 } = require('../../controllers')
 const {
@@ -31,6 +33,10 @@ router.post('/login', validation(joiUserSchema), controllerWrapper(login))
 router.get('/logout', authenticate, controllerWrapper(logout))
 
 router.get('/current', authenticate, controllerWrapper(getCurrentUser))
+
+router.get('verify/:verificationToken', controllerWrapper(verify))
+
+router.post('/verify', controllerWrapper(reVerify))
 
 router.patch(
   '/avatars',
