@@ -1,5 +1,7 @@
+const { nanoid } = require('nanoid')
+
 const { User } = require('../../models')
-const { sendConflict, sendSuccessToRes } = require('../../helpers')
+const { sendConflict, sendSuccessToRes, sendMail } = require('../../helpers')
 const gravatar = require('gravatar')
 const fs = require('fs/promises')
 const path = require('path')
@@ -12,13 +14,20 @@ const register = async (req, res) => {
   if (user) {
     sendConflict(email)
   }
-  const newUser = new User({ email, avatarURL })
+  const verificationToken = nanoid()
+  const newUser = new User({ email, verificationToken, avatarURL })
   newUser.setPassword(password)
   const avatarFolder = path.join(avatarsDir, String(newUser._id))
   await fs.mkdir(avatarFolder)
   await newUser.save()
   const { subscription } = newUser
 
+  const mail = {
+    to: email,
+    subject: 'Confirm email',
+    html: `<a href='http://localhost:3000/api/users/verify/${verificationToken}'>Click for confirming your email!</a>`,
+  }
+  await sendMail(mail)
   sendSuccessToRes(res, { email, subscription }, 201)
 }
 
